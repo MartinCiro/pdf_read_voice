@@ -2,8 +2,8 @@
     "PlayPause": {
         "Value": "//vendor//imgs//playPause.png"
     },
-    "Close": {
-        "Value": "//vendor//imgs//close.png"
+    "Speed": {
+        "Value": "//vendor//imgs//speed.png"
     },
     "PrevPage": {
         "Value": "//vendor//imgs//prevPage.png"

@@ -42,11 +42,11 @@ class VentanaPrincipalForm:
 
         # Colors
         self.colorRed   = helpers.getValue("Colors", "red")
-        self.colorWhite = helpers.getValue("Colors", "white")
+        self.color_white = helpers.getValue("Colors", "white")
         self.colorGreen = helpers.getValue("Colors", "green")
-        self.colorBackg = helpers.getValue("Colors", "backg")
+        self.color_backg = helpers.getValue("Colors", "backg")
         self.colorIcon  = helpers.getValue("Colors", "icon")
-        # style.configure("FAB.TButton", background=self.colorBackg, relief="flat", padding=5)
+        # style.configure("FAB.TButton", background=self.color_backg, relief="flat", padding=5)
 
         # Fonts
         self.fontsTitle = helpers.getValue("Fonts", "title")
@@ -59,12 +59,12 @@ class VentanaPrincipalForm:
         fuente_text_bold = helpers.ValidateSource("textBold", 20)
 
         # Images
-        self.icon_play_pause = helpers.getImage("PlayPause", (10, 15))
-        self.icon_close = helpers.getImage("Close", (10, 15))
-        self.icon_prev_page = helpers.getImage("PrevPage", (10, 15))
-        self.icon_next_page = helpers.getImage("NextPage", (10, 15))
-        self.icon_prev_f = helpers.getImage("PrevF", (10, 15))
-        self.icon_next_f = helpers.getImage("NextF", (10, 15))
+        self.icon_play_pause = helpers.getImage("PlayPause", (60, 60))
+        self.icon_speed = helpers.getImage("Speed", (40, 30))
+        self.icon_prev_page = helpers.getImage("PrevPage", (30, 30))
+        self.icon_next_page = helpers.getImage("NextPage", (30, 30))
+        self.icon_prev_f = helpers.getImage("PrevF", (50, 50))
+        self.icon_next_f = helpers.getImage("NextF", (50, 50))
         self.icon_logo   = helpers.getImage("Logo", (10, 15))
         self.icon_app    = helpers.getImage("IconApp", (10, 15))
         self.icon_upload_light = helpers.getImage("UploadLight", (10, 15))
@@ -105,7 +105,7 @@ class VentanaPrincipalForm:
         # =========================================================================
         # | Frame - Header completo
         # =========================================================================
-        frameHeader = tk.Frame(self.ventana, bd = 0, height = 100, relief = tk.SOLID, padx = 1, pady = 1, bg = self.colorBackg)
+        frameHeader = tk.Frame(self.ventana, bd = 0, height = 100, relief = tk.SOLID, padx = 1, pady = 1, bg = self.color_backg)
         frameHeader.pack(side = "top", expand = tk.FALSE, fill = tk.BOTH)
         
         # Region Right side Header
@@ -114,7 +114,7 @@ class VentanaPrincipalForm:
         # =========================================================================
        
         # Configuración del titulo del formulario
-        title = tk.Label(frameHeader, text="PDF TO VOICE", font = fuente_title, fg=self.colorRed, bg=self.colorBackg, pady=20)  
+        title = tk.Label(frameHeader, text="PDF TO VOICE", font = fuente_title, fg=self.colorRed, bg=self.color_backg, pady=20)  
         title.pack(expand = tk.TRUE, fill = tk.BOTH)
 
         # Endregion Right side Header
@@ -125,52 +125,52 @@ class VentanaPrincipalForm:
         # =========================================================================
         # | frame form campos y botones
         # =========================================================================
-        frame_form = tk.Frame(self.ventana, bd=0, relief=tk.SOLID, bg=self.colorBackg)
-        frame_form.pack(side="right", expand=tk.TRUE, fill=tk.BOTH)
+        frame_form = tk.Frame(self.ventana, bd=0, relief=tk.SOLID, bg=self.color_backg)
+        frame_form.pack(expand=tk.TRUE, fill=tk.BOTH)
         
 
         # =========================================================================
         # | Frame Left Body
         # =========================================================================
-        frameRight = tk.Frame(frame_form, bd=0, relief=tk.SOLID, bg=self.colorBackg, padx=100, pady=10)
-        frameRight.pack(side="right", expand=tk.YES, fill=tk.BOTH)
-        frameRight.columnconfigure(0, weight=1)
+        frame_right = tk.Frame(frame_form, bd=0, relief=tk.SOLID, bg=self.color_backg, padx=100, pady=10)
+        frame_right.pack(side="right", expand=tk.YES, fill=tk.BOTH)
+        frame_right.columnconfigure(0, weight=1)
 
-        frame_texto = tk.Frame(frameRight, bd=2, relief="solid", background=self.colorGreen)
+        frame_texto = tk.Frame(frame_right, bd=2, relief="solid", background=self.colorGreen)
         frame_texto.grid(row=8, column=0, padx=10, pady=(2, 5), sticky="nsew")
 
         # Etiqueta para indicar el cuadro de texto
-        lblTextoALeer = ttk.Label(frameRight, text="Texto a leer:", font=fuente_text_bold, background=self.colorBackg)
-        lblTextoALeer.grid(row=7, column=0, padx=10, pady=(10, 2), sticky="w")
+        lbl_texto_leer = ttk.Label(frame_right, text="Texto a leer:", font=fuente_text_bold, background=self.color_backg)
+        lbl_texto_leer.grid(row=7, column=0, padx=10, pady=(10, 2), sticky="w")
 
         # Cuadro de texto dentro del frame para simular el borde de color
-        self.text_widget = tk.Text(frame_texto, wrap="word", width=40, height=10, bd=0, highlightthickness=0, bg=self.colorWhite)
+        self.text_widget = tk.Text(frame_texto, wrap="word", width=40, height=10, bd=0, highlightthickness=0, bg=self.color_white)
         self.text_widget.pack(padx=2, pady=2, fill="both", expand=True)
         self.text_widget.config(font=self.fontsText)
 
         # Organizar tamaño del cuadro de texto
-        frame_fab = tk.Frame(frame_texto, bd=0, relief=tk.SOLID, bg=self.colorWhite, width=10)
+        frame_fab = tk.Frame(frame_texto, bd=0, relief=tk.SOLID, bg=self.color_white, width=10)
         frame_fab.place(relx=0.01, rely=0.98, anchor="sw")
 
         # Estilo para el botón flotante
         style.configure(
             "btnTextBox.Toolbutton",
-            foreground="white",  
-            background=self.colorWhite,
+            foreground=self.color_white,  
+            background=self.color_white,
             width=frame_fab.winfo_width(),
         )
 
         # Boton flotante add
-        self.boton_flotante = ttk.Button(frame_fab, image=self.icon_upload, style="btnTextBox.Toolbutton", compound="center", command=Execute)
-        self.boton_flotante.pack(fill="both", expand=True)
+        self.boton_flotante_add = ttk.Button(frame_fab, image=self.icon_upload, style="btnTextBox.Toolbutton", compound="center", command=helpers.open_pdf)
+        self.boton_flotante_add.pack(fill="both", expand=True)
 
         # Boton flotante left page
-        frame_btn_flotante_page = tk.Frame(frame_texto, bd=0, relief=tk.SOLID, bg=self.colorWhite, width=0.1, height=1)
+        frame_btn_flotante_page = tk.Frame(frame_texto, bd=0, relief=tk.SOLID, bg=self.color_white, width=0.1, height=1)
         frame_btn_flotante_page.place(relx=1, rely=1, anchor="s", x=-35, y=-5) 
 
-        txtRelacionEnvio = ttk.Entry(frame_btn_flotante_page, width=4, justify="center", font=self.fontsTitle)
-        txtRelacionEnvio.pack(fill="x", ipady=1)
-        txtRelacionEnvio.insert(0, "1")
+        txt_num_page = ttk.Entry(frame_btn_flotante_page, width=4, justify="center", font=self.fontsTitle)
+        txt_num_page.pack(fill="x", ipady=1)
+        txt_num_page.insert(0, "1")
 
 
 
@@ -183,18 +183,59 @@ class VentanaPrincipalForm:
 
 
 
+        style.configure(
+            "btnPlay.Toolbutton",
+            foreground=self.color_backg,  
+            background=self.color_backg
+        )
 
+        # Configuración del frame de botones
+        frame_btns = tk.Frame(frame_right, bd=0, relief=tk.SOLID, bg=self.color_backg, padx=0, pady=5)
+        frame_btns.grid(row=11, column=0, padx=0, pady=0, sticky="ew")
+
+        # Configurar columnas para centrar botones
+        frame_btns.grid_columnconfigure(0, weight=1)  # Espacio a la izquierda
+        frame_btns.grid_columnconfigure(1, weight=1)
+        frame_btns.grid_columnconfigure(2, weight=2)  # Botón Play centrado
+        frame_btns.grid_columnconfigure(3, weight=1)
+        frame_btns.grid_columnconfigure(4, weight=1)  # Espacio a la derecha
+
+        # Botones
+        btn_next_f = ttk.Button(frame_btns, image=self.icon_next_f, style="btnPlay.Toolbutton", compound="center", command=Execute)
+        btn_next_f.grid(row=11, column=4, padx=2, pady=0, sticky="ew")
+
+        btn_netx_page = ttk.Button(frame_btns, image=self.icon_next_page, style="btnPlay.Toolbutton", compound="center", command=Execute)
+        btn_netx_page.grid(row=11, column=3, padx=2, pady=0, sticky="ew")
+
+        btn_play = ttk.Button(frame_btns, image=self.icon_play_pause, style="btnPlay.Toolbutton", compound="center", command=Execute)
+        btn_play.grid(row=11, column=2, padx=2, pady=0, sticky="ew")  # Centrado
+
+        btn_prev_page = ttk.Button(frame_btns, image=self.icon_prev_page, style="btnPlay.Toolbutton", compound="center", command=Execute)
+        btn_prev_page.grid(row=11, column=1, padx=2, pady=0, sticky="ew")
+
+        btn_prev_f = ttk.Button(frame_btns, image=self.icon_prev_f, style="btnPlay.Toolbutton", compound="center", command=Execute)
+        btn_prev_f.grid(row=11, column=0, padx=2, pady=0, sticky="ew")
+
+
+        # para el speed
+        frame_speed = tk.Frame(frame_right, bd=0, relief=tk.SOLID, bg=self.color_backg, width=10)
+        frame_speed.place(relx=0.99, rely=0.76, anchor="sw")
+
+        # Estilo para el botón flotante
+        style.configure(
+            "btnSpeed.Toolbutton",
+            foreground=self.color_backg,  
+            background=self.color_backg,
+            width=frame_speed.winfo_width(),
+        )
+
+        # Boton flotante add
+        self.boton_change_speed = ttk.Button(frame_speed, image=self.icon_speed, style="btnSpeed.Toolbutton", compound="center", command=Execute)
+        self.boton_change_speed.pack(fill="both", expand=True)
 
         
 
-        # Configuración adicional para agregar botones en la parte inferior.
-        frameBtns = tk.Frame(frameRight, bd=0, relief=tk.SOLID, bg=self.colorBackg, padx=0, pady=5)
-        frameBtns.grid(row=10, column=0, padx=0, pady=0,  sticky="ew")
-        frameBtns.columnconfigure(0, weight=1)
 
-        btnEjecutar = ttk.Button(frameBtns, text = "Validación y ejecución de proceso", style = "Accent.TButton", width = 70, command = Execute)
-        btnEjecutar.grid(row = 11, column = 0, columnspan = 2, padx = 0, pady = 10)
-        
         # Endregion - rightbody
         # Endregion  - Cuerpo principal del formulario 
         self.ventana.mainloop()

@@ -5,6 +5,9 @@ import pathlib
 from tkinter import font as tkFont
 from cryptography.fernet import Fernet
 from PIL import ImageTk, Image, ImageFont
+from tkinter import filedialog
+from fitz import Document
+
 # endregion importando librerias necesarias
 
 # region Instanciar Objetos y variables Globales
@@ -118,5 +121,16 @@ class Helpers:
             # Si falla, usa "Times"
             return ("Times", size)
 
+    def open_pdf(self):
+        file_path = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
+        if file_path:
+            try:
+                pdf_document = Document(file_path)  
+                self.text = "\n".join([pdf_document.load_page(i).get_text() for i in range(pdf_document.page_count)])
+                print(self.text)
+                return self.text
+            except Exception as e:
+                print(f"Error al leer el PDF: {e}")
+                return None
     # endregion Metodos
 # endregion
