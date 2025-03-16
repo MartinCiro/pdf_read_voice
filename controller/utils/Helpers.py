@@ -2,8 +2,9 @@
 import os
 import json
 import pathlib
-from PIL import ImageTk, Image
+from tkinter import font as tkFont
 from cryptography.fernet import Fernet
+from PIL import ImageTk, Image, ImageFont
 # endregion importando librerias necesarias
 
 # region Instanciar Objetos y variables Globales
@@ -22,15 +23,8 @@ class Helpers:
     # region Metodos
     # Nos ayuda para traer las rutas completas del config
     def getRoutes(self, key, value):
-        with open(self.__routeConfig, 'r') as file: 
-            config = json.load(file)
-            if config[key][value] == "":
-                file.close()
-            else:
-                route = str(config[key][value])
-                file.close()
-        
-        fullpath = relativePath + route
+        data = self.getValue(key, value)        
+        fullpath = relativePath + data
         return fullpath
     
     def encriptarData(self, valor: str):
@@ -112,5 +106,17 @@ class Helpers:
             cont += 1
         return cont
     
+    # Metodo para validar la existencia de la fuente
+    def ValidateSource(self, font, size = 40 ):
+        try:
+            # Intentar cargar la fuente personalizada
+            ruta_fuente = self.getRoutes("Fonts", font)
+            fuente_real = ImageFont.truetype(ruta_fuente)  
+            return tkFont.Font(family=fuente_real.font.family, size=size)
+        except Exception:
+            print(Exception)
+            # Si falla, usa "Times"
+            return ("Times", size)
+
     # endregion Metodos
 # endregion

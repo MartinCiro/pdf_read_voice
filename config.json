@@ -1,15 +1,52 @@
 {
-    "IconPrincipal": {
-        "Value": "\\vendor\\imgs\\yawiLogo.png"
+    "PlayPause": {
+        "Value": "//vendor//imgs//playPause.png"
     },
-    "LogoYawi": {
-        "Value": "\\vendor\\imgs\\yawiLogo.png"
+    "Close": {
+        "Value": "//vendor//imgs//close.png"
     },
-    "FolderIco": {
-        "Value": "\\vendor\\imgs\\Folder.png"
+    "PrevPage": {
+        "Value": "//vendor//imgs//prevPage.png"
     },
+    "NextPage": {
+        "Value": "//vendor//imgs//nextPage.png"
+    },
+    "PrevF": {
+        "Value": "//vendor//imgs//prev5.png"
+    },
+    "NextF": {
+        "Value": "//vendor//imgs//next5.png"
+    },
+    "Logo": {
+        "Value": "//vendor//imgs//logoCa.png"
+    },
+    "IconApp": {
+        "Value": "//vendor//imgs//iconApp.png"
+    },
+    "UploadLight": {
+        "Value": "//vendor//imgs//upload_light.png"
+    },
+    "Upload": {
+        "Value": "//vendor//imgs//upload.png"
+    },
+
     "FolderVoice": {
-        "Value": "\\vendor\\voice"
+        "Value": "//vendor//voice"
+    },
+    "Fonts": {
+        "title": "//vendor//fonts//super_cartoon.ttf",
+        "text": "//vendor//fonts//comic_neue_regular.ttf",
+        "textBold": "//vendor//fonts//comic_neue_bold.ttf",
+        "textItalic": "//vendor//fonts//comic_neue_italic.ttf",
+        "textBoldItalic": "//vendor//fonts//comic_neue_bold_italic.ttf",
+        "textLight": "//vendor//fonts//comic_neue_light.ttf"
+    },
+    "Colors": {
+        "red"   : "#a70054",
+        "white" : "#faf8f6",
+        "green" : "#45d727",
+        "backg" : "#e8ffff",
+        "icon"  : "#310000"
     },
     "APINeek": {
         "key": "gAAAAABl-326a88wb9h5aslKyj12ckXkre-xj2nm1rjfgpqiFhOjLKuX5Qu2qG8syxWHLbcIA1RsF-7SScURYdYnEuTfNeZskGLlnHCoEXgebB4jRHYSCIt5wz92YOAEWc2K86QlU6t2",
@@ -23,5 +60,5 @@
     },
     "SegmentosFormulario": {
         "segmentos": "-- Selecciona un segmento de ejecucion --|1) Generacion de relacion y RIPS - GomediSys|2) Certificado RIPS - GomediSys|3) Cargar Soportes|4) Radicado Entidad"
-   }
+    }
 }
