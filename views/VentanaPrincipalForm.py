@@ -68,7 +68,7 @@ class VentanaPrincipalForm:
         self.icon_logo   = helpers.getImage("Logo", (10, 15))
         self.icon_app    = helpers.getImage("IconApp", (10, 15))
         self.icon_upload_light = helpers.getImage("UploadLight", (10, 15))
-        self.icon_upload = helpers.getImage("Upload", (20, 20))
+        self.icon_upload = helpers.getImage("Upload", (30, 35))
 
         #self.__listadoIPS = [item["nombre_ips"] for item in self.__dataSedes]
         self.__listadoEPS =[]
@@ -149,18 +149,43 @@ class VentanaPrincipalForm:
         self.text_widget.config(font=self.fontsText)
 
         # Organizar tamaño del cuadro de texto
-        frame_fab = tk.Frame(frame_texto, width=80, height=80, bg=self.colorBackg)
+        frame_fab = tk.Frame(frame_texto, bd=0, relief=tk.SOLID, bg=self.colorWhite, width=10)
         frame_fab.place(relx=0.01, rely=0.98, anchor="sw")
-        
-        style = ttk.Style()
-        
-        style.map("FAB.TButton",
-          background=[('active', self.colorBackg),  # Color de fondo cuando el botón está activo
-                     ('!active', self.colorBackg)])  # Color de fondo cuando no está activo
 
-        # Crear el botón con el estilo definido
-        self.boton_flotante = ttk.Button(frame_fab, image=self.icon_upload, width=40, style="FAB.TButton", command=Execute)
-        self.boton_flotante.pack(padx=0, pady=0, fill="both", expand=True)
+        # Estilo para el botón flotante
+        style.configure(
+            "btnTextBox.Toolbutton",
+            foreground="white",  
+            background=self.colorWhite,
+            width=frame_fab.winfo_width(),
+        )
+
+        # Boton flotante add
+        self.boton_flotante = ttk.Button(frame_fab, image=self.icon_upload, style="btnTextBox.Toolbutton", compound="center", command=Execute)
+        self.boton_flotante.pack(fill="both", expand=True)
+
+        # Boton flotante left page
+        frame_btn_flotante_page = tk.Frame(frame_texto, bd=0, relief=tk.SOLID, bg=self.colorWhite, width=0.1, height=1)
+        frame_btn_flotante_page.place(relx=1, rely=1, anchor="s", x=-35, y=-5) 
+
+        txtRelacionEnvio = ttk.Entry(frame_btn_flotante_page, width=4, justify="center", font=self.fontsTitle)
+        txtRelacionEnvio.pack(fill="x", ipady=1)
+        txtRelacionEnvio.insert(0, "1")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
         # Configuración adicional para agregar botones en la parte inferior.
         frameBtns = tk.Frame(frameRight, bd=0, relief=tk.SOLID, bg=self.colorBackg, padx=0, pady=5)
