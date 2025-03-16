@@ -1,26 +1,33 @@
-import wave
+from pydub import AudioSegment
 from piper import PiperVoice
 from pb import PDFReader
+import io
 
-# Cargar el modelo de voz desde los archivos
-voice = PiperVoice.load("espeak_es.onnx", "espeak_es.json")
+# Cargar el modelo de voz
+voice = PiperVoice.load("vendor/voice/mx/espeak_es.onnx", "vendor/voice/mx/espeak_es.json")
 
-pdf_path = "/home/ciro/Descargas/pb.pdf"  # Ruta de tu archivo PDF
+# Cargar el texto desde el PDF
+pdf_path = "vendor/pdf/prueba.pdf"
 reader = PDFReader(pdf_path)
-
-# Texto a convertir en audio
 text = reader.extract_text()
 
-# Generar el audio como un flujo de datos
+# Generar el audio como un flujo de datos (bytes crudos)
 audio_stream = voice.synthesize_stream_raw(text)
+audio_data = b''.join(audio_stream)  # Convertir el generador en bytes
 
-# Guardar el audio en formato WAV válido
-with wave.open("output.wav", "wb") as f:
-    f.setnchannels(1)       # Mono
-    f.setsampwidth(2)       # 16 bits
-    f.setframerate(22050)   # Tasa de muestreo (ajústala según el modelo)
+# Crear un buffer de memoria para el audio
+audio_buffer = io.BytesIO(audio_data)
 
-    for chunk in audio_stream:
-        f.writeframes(chunk)
+# Convertir el audio PCM crudo directamente a un objeto pydub.AudioSegment
+audio = AudioSegment.from_raw(
+    audio_buffer, 
+    sample_width=2,   # 16 bits = 2 bytes
+    frame_rate=22050, # 22050 Hz (frecuencia de muestreo por defecto en piper)
+    channels=1        # Mono
+)
 
-print("✅ Audio generado correctamente: output.wav")
+# Exportar directamente a MP3 sin generar WAV
+mp3_path = "output.mp3"
+audio.export(mp3_path, format="mp3")
+
+print(f"✅ Audio generado correctamente: {mp3_path}")
