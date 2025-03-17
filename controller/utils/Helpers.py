@@ -2,11 +2,11 @@
 import os
 import json
 import pathlib
-from tkinter import font as tkFont
+from customtkinter import CTkFont, filedialog, CTkImage
 from cryptography.fernet import Fernet
 from PIL import ImageTk, Image, ImageFont
-from tkinter import filedialog
 from fitz import Document
+
 
 # endregion importando librerias necesarias
 
@@ -70,13 +70,29 @@ class Helpers:
     
     # Nos permite cargar una imagen de forma dinamica
     def getImage(self, key, size):
-        # Abrir la imagen
-        image = Image.open(self.getRoutes(key, "Value"))
-        # Redimensionar la imagen con el filtro LANCZOS (anteriormente ANTIALIAS)
-        image = image.resize(size, Image.Resampling.LANCZOS)
-        # Convertir a un objeto PhotoImage de Tkinter
-        return ImageTk.PhotoImage(image)  
-
+        """
+        Carga una imagen, la redimensiona y la convierte en un objeto CTkImage.
+        
+        Parámetros:
+            key (str): La clave para obtener la ruta de la imagen.
+            size (tuple): El tamaño deseado para la imagen (ancho, alto).
+        
+        Retorna:
+            CTkImage: La imagen redimensionada y convertida a CTkImage.
+        """
+        try:
+            # Abrir la imagen
+            image = Image.open(self.getRoutes(key, "Value"))
+            # Redimensionar la imagen con el filtro LANCZOS
+            image = image.resize(size, Image.Resampling.LANCZOS)
+            # Convertir a un objeto CTkImage
+            return CTkImage(light_image=image, size=size)
+        except Exception as e:
+            print(f"Error cargando la imagen: {e}")
+            # Si falla, devuelve una imagen predeterminada
+            default_image = Image.new("RGB", size, color="white")
+            return CTkImage(light_image=default_image, size=size)
+        
     #Nos permite realizar un centrado de la ventana
     def centerWindows(self,windows,height,withs):    
         pantall_ancho = windows.winfo_screenwidth()
@@ -109,17 +125,20 @@ class Helpers:
             cont += 1
         return cont
     
-    # Metodo para validar la existencia de la fuente
-    def ValidateSource(self, font, size = 40 ):
+
+    def ValidateSource(self, font, size=40):
         try:
             # Intentar cargar la fuente personalizada
-            ruta_fuente = self.getRoutes("Fonts", font)
-            fuente_real = ImageFont.truetype(ruta_fuente)  
-            return tkFont.Font(family=fuente_real.font.family, size=size)
-        except Exception:
-            print(Exception)
-            # Si falla, usa "Times"
-            return ("Times", size)
+            ruta_fuente = self.getRoutes("Fonts", font)  # Obtén la ruta de la fuente
+            fuente_real = ImageFont.truetype(ruta_fuente, size=size)  # Carga la fuente con el tamaño especificado
+
+            # Devuelve una instancia de CTkFont
+            return CTkFont(family=fuente_real.font.family, size=size)
+        except Exception as e:
+            print(f"Error cargando la fuente: {e}")
+            # Si falla, usa una fuente predeterminada
+            return CTkFont(family="Times", size=size)  # Devuelve una instancia de CTkFont
+
 
     def open_pdf(self):
         file_path = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
