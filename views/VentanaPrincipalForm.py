@@ -6,11 +6,13 @@ import customtkinter as ctk
 
 from tkinter import StringVar, messagebox
 
+from controller import Ejecucion
 from controller.utils.Helpers import Helpers
 # Endregion - Importación de librerias y clases.
 
 # Region - Inicialización de clases para uso de metodos.
 helpers = Helpers()
+ejec = Ejecucion.AudioPlayer()
 # Endregion - Inicialización de clases para uso de metodos.
 
 class VentanaPrincipalForm:
@@ -25,15 +27,33 @@ class VentanaPrincipalForm:
         # Region - Configuración de ventana (Form)
         self.ventana = ctk.CTk()  # Instancia de CustomTkinter en var ventana
 
-        self.ventana.title('Radicación Zentria - V1.0.0.0')  # Titulo de la ventana
+        self.ventana.title('PDF TO VOICE - V1.0.0.0')  # Titulo de la ventana
         self.ventana.geometry('800x500')  # Dimensiones iniciales de la ventana
         self.ventana.configure(fg_color ='#FFF3F1')  # Fondo de la ventana
-        self.ventana.resizable(width =False, height =False)  # Inhabilita el resize de la ventana por usuario
+        self.ventana.resizable(width = False, height = False)  # Inhabilita el resize de la ventana por usuario
         helpers.centerWindows(self.ventana, 450, 860)  # height | width Se centra la ventana en pantalla
+
+        def carga_pdf():
+            try:
+                texto = helpers.open_pdf()
+                self.text_widget.delete(1.0, ctk.END)
+                self.text_widget.insert(1.0, texto)
+
+                self.text = self.text_widget.get(1.0, ctk.END)
+
+                path_inicial = helpers.getRoutes("FolderVoice", "Value")
+                voice_model = (f"{path_inicial}/mx/espeak_es.onnx", f"{path_inicial}/mx/espeak_es.json")
+                ejec.inicialize(self.text, voice_model)
+                ejec.save_audio("output.mp3")
+
+            except Exception  as e:
+                messagebox.showinfo(message = f"No ha sido posible realizar la ejecución, valida con soporte. Error: {str(e)}", title = "¡ERROR!")
 
         # Endregion - Configuración de ventana (Form)
 
         # region - Variables globales a usar dentro del form
+        self.text = ""
+        self.player = None
         # Colors
         self.colorRed = helpers.getValue("Colors", "red")
         self.color_white = helpers.getValue("Colors", "white")
@@ -45,7 +65,6 @@ class VentanaPrincipalForm:
         self.fontsTitle = helpers.ValidateSource("title", 40)  # Numero establece el tamaño de fuente
         self.fontsText = helpers.ValidateSource("text", 20)  # Numero establece el tamaño de fuente
         self.textBold = helpers.ValidateSource("textBold", 35)  # Numero establece el tamaño de fuente
-
 
         # Images
         self.icon_play_pause = helpers.getImage("PlayPause", (70, 70))
@@ -69,7 +88,7 @@ class VentanaPrincipalForm:
             fg_color = self.color_backg, 
             corner_radius = 0
         )
-        frameHeader.pack(side = "top", expand =False, fill = "both")
+        frameHeader.pack(side = "top", expand = False, fill = "both")
 
         # Region Right side Header
         # =========================================================================
@@ -163,7 +182,7 @@ class VentanaPrincipalForm:
             hover_color = self.color_white,  
             cursor = "hand2",  
             border_width = 0, 
-            command = helpers.open_pdf,
+            command = carga_pdf,
             width = self.icon_upload._size[0],
             height = self.icon_upload._size[1]
         )
@@ -190,8 +209,6 @@ class VentanaPrincipalForm:
         frame_btns = ctk.CTkFrame(frame_right, fg_color = self.color_backg, corner_radius = 0)
         frame_btns.grid(row = 11, column = 0, padx = 0, sticky = "ew", pady = (2, 5))
 
-       
-
         # Botones
         # btn prev five
         btn_prev_f = ctk.CTkButton(
@@ -203,8 +220,9 @@ class VentanaPrincipalForm:
             cursor = "hand2",
             border_width = 0, 
             width = self.icon_prev_f._size[0],
-            height = self.icon_prev_f._size[1]
-        ) #command = Execute)
+            height = self.icon_prev_f._size[1],
+            command = ejec.retrocede_five
+        )
         btn_prev_f.pack(side = "left", padx =(160, 0), pady =(5, 0))
 
         # btn prev page
@@ -232,8 +250,9 @@ class VentanaPrincipalForm:
             cursor = "hand2",
             border_width = 0, 
             width = self.icon_play_pause._size[0],
-            height = self.icon_play_pause._size[1]
-        ) #command = Execute)
+            height = self.icon_play_pause._size[1],
+            command = ejec.play_pause
+        )
         #btn_play.grid(row= 0, column=2, padx =(2, 0), pady =(9, 0))
         btn_play.pack(side = "left", padx =6, pady =(5, 0))
 
@@ -248,7 +267,7 @@ class VentanaPrincipalForm:
             border_width = 0,  
             width = self.icon_next_page._size[0],
             height = self.icon_next_page._size[1]
-        ) #command = Execute)
+        )
         btn_netx_page.pack(side = "left", padx =(0, 4), pady =(5, 0))  
 
         btn_next_f = ctk.CTkButton(
@@ -260,8 +279,9 @@ class VentanaPrincipalForm:
             cursor = "hand2",
             border_width = 0, 
             width = self.icon_next_f._size[0],
-            height = self.icon_next_f._size[1]
-        ) #command = Execute)
+            height = self.icon_next_f._size[1],
+            command = ejec.avanza_five
+        )
         btn_next_f.pack(side = "left", padx =(0, 50), pady =(5, 0))
 
         # Boton flotante change speed

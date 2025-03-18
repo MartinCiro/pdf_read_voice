@@ -2,6 +2,7 @@
 import os
 import json
 import pathlib
+import re
 from customtkinter import CTkFont, filedialog, CTkImage
 from cryptography.fernet import Fernet
 from PIL import ImageTk, Image, ImageFont
@@ -109,7 +110,7 @@ class Helpers:
         inputTxt.configure(state='disabled')
     
     # Nos permite realizar el conteo de las carpetas
-    def countFolder(self,ruta):
+    def countFolder(self, ruta):
         self.__initial_count = 0
         for path in pathlib.Path(ruta).iterdir():
             if path.is_dir():
@@ -125,7 +126,6 @@ class Helpers:
             cont += 1
         return cont
     
-
     def ValidateSource(self, font, size=40):
         try:
             # Intentar cargar la fuente personalizada
@@ -139,15 +139,14 @@ class Helpers:
             # Si falla, usa una fuente predeterminada
             return CTkFont(family="Times", size=size)  # Devuelve una instancia de CTkFont
 
-
     def open_pdf(self):
         file_path = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
         if file_path:
             try:
                 pdf_document = Document(file_path)  
                 self.text = "\n".join([pdf_document.load_page(i).get_text() for i in range(pdf_document.page_count)])
-                print(self.text)
-                return self.text
+                content = re.sub(r"[ ]{2,}", " ", self.text)
+                return content
             except Exception as e:
                 print(f"Error al leer el PDF: {e}")
                 return None

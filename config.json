@@ -31,7 +31,7 @@
     },
 
     "FolderVoice": {
-        "Value": "//vendor//voice"
+        "Value": "/vendor/voice"
     },
     "Fonts": {
         "title": "//vendor//fonts//super_cartoon.ttf",
