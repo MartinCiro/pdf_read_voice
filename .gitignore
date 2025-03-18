@@ -156,3 +156,5 @@ dmypy.json
 cython_debug/
 plugins/gecko/geckodriver.exe
 vendor/logs/*
+
+.mp3
