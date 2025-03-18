@@ -1,3 +1,5 @@
+Proyecto libre, solo pasatiempo, metodos semifuncionales, falta implementar los metodos definidos en "Ejecucion.py"
+
 base
 https://github.com/eminemahjoub/pdf-voice-reader
 metodos de voz
