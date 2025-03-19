@@ -43,8 +43,8 @@ class VentanaPrincipalForm:
 
                 path_inicial = helpers.getRoutes("FolderVoice", "Value")
                 voice_model = (f"{path_inicial}/mx/espeak_es.onnx", f"{path_inicial}/mx/espeak_es.json")
-                ejec.inicialize(self.text, voice_model)
-                ejec.save_audio("output.mp3")
+                ejec.inicialize(self.text, voice_model, self.text_widget)
+                ejec.save_audio()
 
             except Exception  as e:
                 messagebox.showinfo(message = f"No ha sido posible realizar la ejecución, valida con soporte. Error: {str(e)}", title = "¡ERROR!")
