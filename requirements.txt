@@ -1,0 +1,10 @@
+customtkinter
+pymupdf
+fitz
+frontend
+tools
+pillow
+cryptography
+pydub
+piper-tts==1.2.0
+tk

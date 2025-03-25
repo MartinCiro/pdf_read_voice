@@ -1,0 +1,19 @@
+services:
+  app:
+    image: python:3.10-slim
+    container_name: python
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DISPLAY=:99
+    command: ["/bin/sh", "-c", "apt update && apt install -y build-essential python3-dev tcl tk ffmpeg libsm6 libxext6 x11vnc xvfb && \
+      Xvfb :99 -screen 0 1920x1080x24 & \
+      mkdir -p static && \
+      pip install --no-cache-dir -r requirements.txt && \
+      python main.py --host 0.0.0.0 --port 5000"]
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
